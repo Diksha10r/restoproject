@@ -1,0 +1,16 @@
+    Dim srow1 As DataGridViewRow
+        srow1 = DataGridView1.Rows(index)
+        Dim cu_id As Integer = srow1.Cells(0).Value.ToString
+        con.Open()
+
+        Dim query4 As String
+        query4 = "Delete from Customer WHERE CUSTOMER_ID=" & cu_id & " "
+        Dim cmd As New OleDbCommand(query4, con)
+        Dim i As Integer
+        i = cmd.ExecuteNonQuery()
+        If (i > 0) Then MessageBox.Show("Record Deleted")
+        DataGridView1.Refresh()
+
+        
+
+        con.Close()

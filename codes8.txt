@@ -1,0 +1,38 @@
+*****add button clear text boxes-------------done
+*****automatic no on form load------------
+*****table paid or table again selection if not paid---------
+
+
+
+
+
+
+   con.Open()
+        Dim cmd As New OleDbCommand("Select * from ORDER_TAB", con)
+        cmd.Connection = con
+        Dim oid As Object
+        Dim strid As String
+        Dim oidd As Integer
+        cmd.CommandText = "Select max(ORDER_ID) as oid from ORDER_TAB"
+        oid = cmd.ExecuteScalar
+        If (oid Is DBNull.Value) Then
+            oidd = 1
+        Else
+            strid = CType(oid, String)
+            oidd = CType(strid, String)
+            oidd = oidd + 1
+        End If
+
+
+**********************************************************************
+
+
+    Private Sub DataGridView1_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick, DataGridView1.CellClick
+
+        index = e.RowIndex
+        Dim selectedrow As DataGridViewRow
+        selectedrow = Me.DataGridView1.Rows(index)
+        TextBox1.Text = selectedrow.Cells(1).Value.ToString
+        TextBox2.Text = selectedrow.Cells(3).Value.ToString
+end sub
+

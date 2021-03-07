@@ -1,0 +1,56 @@
+INSERT
+
+
+   Dim oqua As Integer
+        oqua = InputBox("enter quantity")
+        otype = ComboBox1.Text
+        omenu = ComboBox2.Text
+        oitemnm = ComboBox3.Text
+Dim query As String
+        query = "Insert into ORDER_TAKE(ORDER_TYPE,[ITEM_ID],ITEM_NAME,MENU_TYPE,[ITEM_QUANTITY],[ITEM_PRICE]) values(?,?,?,?,?,?)"
+        Dim cmd As New OleDbCommand(query, con)
+        cmd.Parameters.AddWithValue("ORDER_TYPE", otype)
+        cmd.Parameters.AddWithValue("ITEM_ID", oitemid)
+        cmd.Parameters.AddWithValue("ITEM_NAME", oitemnm)
+        cmd.Parameters.AddWithValue("MENU_TYPE", omenu)
+        cmd.Parameters.AddWithValue("ITEM_QUANTITY", oqua)
+        cmd.Parameters.AddWithValue("ITEM_PRICE", oprice)
+
+        Dim i As Integer
+        i = cmd.ExecuteNonQuery()
+        If (i > 0) Then
+            MessageBox.Show("Item added")
+            DataGridView1.Rows(0).SetValues(otype)
+            DataGridView1.Rows(1).SetValues(oitemid)
+            DataGridView1.Rows(2).SetValues(oitemnm)
+            DataGridView1.Rows(3).SetValues(omenu)
+            DataGridView1.Rows(4).SetValues(oqua)
+            DataGridView1.Rows(5).SetValues(oprice)
+        Else
+            MessageBox.Show("Item not added")
+        End If
+
+********************************************************
+SAVE
+
+ Dim odate, otime, query4, tbid As String
+        Dim eid, i As Integer
+        odate = DateTimePicker1.Value.Date
+        otime = DateTimePicker2.Value.Hour
+        otype = ComboBox2.Text
+        eid = CInt(ComboBox4.Text)
+        tbid = ComboBox5.Text
+        query4 = "Insert into ORDER_TAB (ORDER_DATE,ORDER_TIME,[EMPLOYEE_ID],ORDER_TYPE,TABLE_ORDER_ID,[ITEM_PRICE]) values(?,?,?,?,?,?)"
+        Dim cmd As New OleDbCommand(query4, con)
+        cmd.Parameters.AddWithValue("ORDER_DATE", odate)
+        cmd.Parameters.AddWithValue("ORDER_TIME", otime)
+        cmd.Parameters.AddWithValue("EMPLOYEE_ID", eid)
+        cmd.Parameters.AddWithValue("ORDER_TYPE", otype)
+        cmd.Parameters.AddWithValue("TABLE_ORDER_ID", tbid)
+        cmd.Parameters.AddWithValue("ITEM_PRICE", oprice)
+        i = cmd.ExecuteNonQuery()
+        If (i > 0) Then
+            MessageBox.Show("order taken")
+        Else
+            MessageBox.Show("order not received")
+        End If

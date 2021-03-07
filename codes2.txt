@@ -1,0 +1,72 @@
+ Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
+        Dim oqua, i As Integer
+        oqua = CInt(InputBox("enter quantity"))
+
+        Dim query As String
+
+        odate = DateTimePicker1.Value.Date
+        otime = DateTimePicker2.Value.Hour
+        otype = ComboBox1.Text
+        omenu = ComboBox2.Text
+        oitemnm = ComboBox3.Text
+
+
+        query = "Insert into ORDER_TAB(ORDER_DATE,ODER_TIME,ORDER_TYPE,[ITEM_ID],ITEM_NAME,MENU_TYPE,[ITEM_QUANTITY],[ITEM_PRICE]) values(?,?,?,?,?,?,?,?)"
+        Dim cmd As New OleDbCommand(query, con)
+        cmd.Parameters.AddWithValue("ORDER_DATE", odate)
+        cmd.Parameters.AddWithValue("ORDER_TIME", otime)
+        cmd.Parameters.AddWithValue("ORDER_TYPE", otype)
+        cmd.Parameters.AddWithValue("ITEM_ID", oitemid)
+        cmd.Parameters.AddWithValue("ITEM_NAME", oitemnm)
+        cmd.Parameters.AddWithValue("MENU_TYPE", omenu)
+        cmd.Parameters.AddWithValue("ITEM_QUANTITY", oqua)
+        cmd.Parameters.AddWithValue("ITEM_PRICE", oprice)
+
+        i = cmd.ExecuteNonQuery()
+        If (i > 0) Then
+            MessageBox.Show("Item added")
+            dgshow()
+        Else
+            MessageBox.Show("Item not added")
+        End If
+        con.Close()
+
+    End Sub
+
+
+
+
+**************************************************************************************************
+
+   Dim cmd As New OleDbCommand
+        Dim da As New OleDbDataAdapter
+        Dim query2 As String
+        Dim i As Integer
+
+        query2 = "Select * from ITEMS where MENU_TYPE='" & ComboBox3.Text & "'"
+        With cmd
+            .Connection = con
+            .CommandText = query2
+
+        End With
+        i = cmd.ExecuteNonQuery()
+        If (i > 0) Then
+            oitemid = "ITEM_ID"
+            oprice = CInt("ITEM_PRICE")
+        End If
+
+*****************************************************************************88
+ Dim dt As New DataTable
+        da.SelectCommand = cmd
+        da.Fill(dt)
+        oid = CInt("ITEM_ID")
+        oprice = CInt("ITEM_PRICE")
+        Label7.Text = oid
+
+****************************************8
+  i = cmd.ExecuteNonQuery()
+        If (i > 0) Then
+            oid = CInt("ITEM_ID")
+            oprice = CInt("ITEM_PRICE")
+        End If
+        Label7.Text = oprice

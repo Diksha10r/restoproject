@@ -1,0 +1,66 @@
+Imports System.Windows.Forms
+
+Public Class MDIParent1
+
+    Private Sub ShowNewForm(ByVal sender As Object, ByVal e As EventArgs)
+        ' Create a new instance of the child form.
+        Dim ChildForm As New System.Windows.Forms.Form
+        ' Make it a child of this MDI form before showing it.
+        ChildForm.MdiParent = Me
+
+        m_ChildFormNumber += 1
+        ChildForm.Text = "Window " & m_ChildFormNumber
+
+        ChildForm.Show()
+    End Sub
+
+   
+
+ 
+
+ 
+
+   
+
+    Private m_ChildFormNumber As Integer
+
+    Private Sub MDIParent1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub CUSTOMERToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CUSTOMERToolStripMenuItem.Click
+        Form2.MdiParent = Me
+        Form2.Show()
+
+    End Sub
+
+    Private Sub RESERVATIONToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RESERVATIONToolStripMenuItem.Click
+        Form5.MdiParent = Me
+        Form5.Show()
+
+    End Sub
+
+    Private Sub SCHEDULEToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SCHEDULEToolStripMenuItem.Click
+        Form8.MdiParent = Me
+        Form8.Show()
+
+    End Sub
+
+    Private Sub TABLEORDERToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TABLEORDERToolStripMenuItem.Click
+        Form9.MdiParent = Me
+        Form9.Show()
+
+    End Sub
+
+    Private Sub EMPLOYEEToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EMPLOYEEToolStripMenuItem.Click
+        Form12.MdiParent = Me
+        Form12.Show()
+
+    End Sub
+
+    Private Sub ITEMSToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ITEMSToolStripMenuItem.Click
+        Form13.MdiParent = Me
+        Form13.Show()
+
+    End Sub
+End Class

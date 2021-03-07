@@ -1,0 +1,101 @@
+Public Sub ordertab()
+        Dim oid, eid, tot, cid As Integer
+        Dim tbid, otype, query8, odate, otime As String
+        oid = TextBox1.Text
+        odate = DateTimePicker1.Value.Date
+        otime = DateTimePicker2.Value.Hour
+        otype = ComboBox1.Text
+        eid = ComboBox4.Text
+        tbid = ComboBox5.Text
+        cid = ComboBox6.Text
+
+        tot = (From row As DataGridViewRow In DataGridView1.Rows Where row.Cells(6).FormattedValue.ToString() <> String.Empty Select Convert.ToInt32(row.Cells(6).FormattedValue)).Sum().ToString()
+        TextBox2.Text = tot
+
+        query8 = "Insert into ORDER_TAB ([ORDER_ID],ORDER_DATE,ORDER_TIME,[CUSTOMER_ID],[EMPLOYEE_ID],ORDER_TYPE,TABLE_ID,[TOTAL]) values(?,?,?,?,?,?,?,?)"
+        Dim cmd As New OleDbCommand(query8, con)
+        cmd.Parameters.AddWithValue("ORDER_ID", oid)
+        cmd.Parameters.AddWithValue("ORDER_DATE", odate)
+        cmd.Parameters.AddWithValue("ORDER_TIME", otime)
+        cmd.Parameters.AddWithValue("CUSTOMER_ID", cid)
+        cmd.Parameters.AddWithValue("EMPLOYEE_ID", eid)
+        cmd.Parameters.AddWithValue("ORDER_TYPE", otype)
+        cmd.Parameters.AddWithValue("TABLE_ID", tbid)
+        cmd.Parameters.AddWithValue("TOTAL", tot)
+
+        Dim i As Integer
+        i = cmd.ExecuteNonQuery()
+        If (i > 0) Then
+            MessageBox.Show("ORDER TAKEN")
+        Else
+            MessageBox.Show("ORDER NOT TAKEN")
+        End If
+
+
+    End Sub
+
+*****************************************************************************************
+
+
+    Public Sub tableorder()
+
+        Dim oid, eid, tot, cid As Integer
+        Dim tbid, otype, odate, otime As String
+
+        Dim topa As String
+        topa = "false"
+
+        Dim query9 As String
+        oid = TextBox1.Text
+        odate = DateTimePicker1.Value.Date
+        otime = DateTimePicker2.Value.Hour
+        otype = ComboBox1.Text
+        eid = ComboBox4.Text
+        tbid = ComboBox5.Text
+        cid = ComboBox6.Text
+
+        tot = (From row As DataGridViewRow In DataGridView1.Rows Where row.Cells(6).FormattedValue.ToString() <> String.Empty Select Convert.ToInt32(row.Cells(6).FormattedValue)).Sum().ToString()
+        TextBox2.Text = tot
+
+
+
+        query9 = "Insert into TABLE_ORDER ([ORDER_ID],[TABLE_ORDER_ID],TABLE_ORDER_DATE,TABLE_ORDER_TIME,[CUSTOMER_ID],[EMPLOYEE_ID],TABLE_ORDER_TYPE,TABLE_ID,TABLE_ORDER_PAID,[TABLE_ORDER_PRICE]) values(?,?,?,?,?,?,?,?,?,?)"
+        Dim ccmd As New OleDbCommand(query9, con)
+        ccmd.Parameters.AddWithValue("ORDER_ID", oid)
+        ccmd.Parameters.AddWithValue("TABLE_ORDER_ID", toid)
+        ccmd.Parameters.AddWithValue("TABLE_ORDER_DATE", odate)
+        ccmd.Parameters.AddWithValue("TABLE_ORDER_TIME", otime)
+        ccmd.Parameters.AddWithValue("CUSTOMER_ID", cid)
+        ccmd.Parameters.AddWithValue("EMPLOYEE_ID", eid)
+        ccmd.Parameters.AddWithValue("TABLE_ORDER_TYPE", otype)
+        ccmd.Parameters.AddWithValue("TABLE_ID", tbid)
+        ccmd.Parameters.AddWithValue("TABLE_ORDER_PAID", topa)
+        ccmd.Parameters.AddWithValue("TABLE_ORDER_PRICE", tot)
+        Dim x As Integer
+        x = ccmd.ExecuteNonQuery()
+        If (x > 0) Then
+            MessageBox.Show("TABLE ORDER DONE")
+            Form9.dgshow4()
+            Me.Hide()
+
+        Else
+            MessageBox.Show("TABLE ORDER NOT TAKEN")
+
+        End If
+    End Sub
+
+
+**********************************************************************
+   Dim strid As String
+        Dim toidd As Object
+        Dim cmmd As New OleDbCommand("Select * from TABLE_ORDER", con)
+        cmmd.Connection = con
+        cmmd.CommandText = "Select max(TABLE_ORDER_ID) as toidd from TABLE_ORDER"
+        toidd = cmmd.ExecuteScalar
+        If (toidd Is DBNull.Value) Then
+            uutoid = 1
+        Else
+            strid = CType(toidd, String)
+            uutoid = CType(strid, String)
+            uutoid = uutoid + 1
+        End If

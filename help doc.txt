@@ -1,0 +1,21 @@
+how to login?
+
+login form usually functions as the access gateway to the main form of any program or system. So is the case in this system. There are username and password registered in the database. If entered username or password do not match with any record stored then error message is displayed. after login is successfull, a progress bar starts showing that all your forms are loading connection is made etc. and after this main form appears.
+there are only 2 buttons.Click "login" button to try login.Click "cancel" button to terminate the program. 
+**************************************************************************************************************************************
+main form
+
+The main form is the backbone of this program and consist larger number of controls than any other forms.It consist almost all features of this program. In fact, this form can be considered as the parent form and other forms like adding\editing record(s), viewing details and other forms as the child forms.There is the presence of a panel(main menu) in this form. There are all together 8 buttons in panel and they are customer, reservation, menu, table order, items, employee, feedback, reports and help. all these 8 buttons opens various forms for futher processing. 
+
+
+
+"customer" button of the main form opens customer registration form.it has a datagrid to view all customer details saved in our database. on selecting a particular record we can view some basic details of the customer in the textboxes. this form shows current date and time. this form again contains four buttons and they are add, update, delete and search. clicking on add button we can add new customer to our database. this add buttons open a new form to register new customer details. clicking on update button also opens customer registration form dynamically for updating the information. but for this we need to first select a row from the grid which we wish to update. customer id is auto incremented in this form. clicking on delete button will delete record of a customer.for this we again have to select a row and then click on delete button and the record is deleted. clicking on search button a new form appears and then we can search with customer id, customer name, customer address, customer email etc. and the searched record is seen in the datagrid.
+
+"reservation" button of the main form opens reservation form.it has a datagrid to view all reservations saved in our database. on selecting a particular record we can view some basic details of the customer in the textboxes. this form also shows current date and time. this form again contains four buttons and they are add, update, delete and search. clicking on add button we can add new reservation to our database. this add button opens a new form for entering new record. in this form, customer id is entered by clicking on the link label which shows a grid to search the customer id. clicking on update button also opens reservation form dynamically for updating the information. but for this we need to first select a row from the grid which we wish to update. reservation id is auto incremented in this form. clicking on delete button will delete record.for this we again have to select a row and then click on delete button and the record is deleted. clicking on search button a new form appears and then we can search with reservation id, customer id, etc. and the searched record is seen in the datagrid.
+
+
+ 
+
+
+
+

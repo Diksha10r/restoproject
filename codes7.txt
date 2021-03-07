@@ -1,0 +1,52 @@
+     If Char.IsNumber(e.KeyChar) AndAlso Not e.KeyChar = Chr(Keys.Back) Then
+            e.Handled = True
+
+        End If
+
+
+
+  If DirectCast(sender, TextBox).Text.Length > 0 Then
+            Me.ErrorProvider1.SetError(sender, "")
+        Else
+            Me.ErrorProvider1.SetError(sender, "ENTER NAME")
+        End If
+
+
+        Try
+
+            If Me.ValidateChildren And TextBox2.Text <> String.Empty And TextBox3.Text <> String.Empty And TextBox4.Text <> String.Empty And TextBox5.Text <> String.Empty Then
+
+
+            End If
+        Catch ex As Exception
+
+        End Try
+
+
+
+
+
+*************************************************************************
+
+
+  Private Sub DataGridView1_ColumnHeaderMouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles DataGridView1.ColumnHeaderMouseClick
+        DataGridView1.Columns(e.ColumnIndex).SortMode = DataGridViewColumnSortMode.Automatic
+    End Sub
+
+******************************************************
+
+        'Resize DataGridView to full height.
+        Dim height As Integer = DataGridView1.Height
+        DataGridView1.Height = DataGridView1.RowCount * DataGridView1.RowTemplate.Height
+
+        'Create a Bitmap and draw the DataGridView on it.
+        Bitmap = New Bitmap(Me.DataGridView1.Width, Me.DataGridView1.Height)
+        DataGridView1.DrawToBitmap(Bitmap, New Rectangle(0, 0, Me.DataGridView1.Width, Me.DataGridView1.Height))
+
+        'Resize DataGridView back to original height.
+        DataGridView1.Height = height
+
+        'Show the Print Preview Dialog.
+        PrintPreviewDialog1.Document = PrintDocument1
+        PrintPreviewDialog1.PrintPreviewControl.Zoom = 1
+        PrintPreviewDialog1.ShowDialog()

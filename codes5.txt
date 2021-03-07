@@ -1,0 +1,83 @@
+ Dim cmd As New OleDbCommand
+        Dim da As New OleDbDataAdapter
+        Dim query3 As String
+        query3 = "Select * from EMPLOYEE where EMPLOYEE_JOB_TYPE='waiter' "
+        With cmd
+            .Connection = con
+            .CommandText = query3
+        End With
+        Dim dt As New DataTable
+        da.SelectCommand = cmd
+        da.Fill(dt)
+        With ComboBox4
+            .DataSource = dt
+            .DisplayMember = "EMPLOYEE_ID"
+        End With
+
+
+
+***********************************************************************************
+
+ Public Sub ordershow1()
+        Dim ds As New DataSet
+        Dim dt As New DataTable
+        ds.Tables.Add(dt)
+       
+	
+        Dim da As New OleDbDataAdapter
+        Dim query6 As String
+        query6 = "Select * from ORDER_TAKE where ORDER_ID= " & oid
+        da = New OleDbDataAdapter(query6, con)
+        da.Fill(dt)
+        DataGridView1.DataSource = dt.DefaultView
+    End Sub
+
+******************************************************************************************
+*******
+
+
+  oid = CInt(TextBox1.Text)
+        Dim oqua, itemid, itempr As Integer
+        oqua = CInt(InputBox("enter quantity"))
+        otype = ComboBox1.Text
+        itemid = oitemid
+        oitemnm = ComboBox3.Text
+        omenu = ComboBox2.Text
+        itempr = oprice
+        Dim cid = ComboBox6.Text
+
+       
+        Dim tot As Integer
+        tot = oqua * itempr
+
+
+
+        Dim query As String
+        query = "Insert into ORDER_TAKE ([ORDER_ID],[ITEM_ID],ITEM_NAME,MENU_TYPE,[ITEM_QUANTITY],[ITEM_PRICE],[ITEM_AMOUNT]) values(?,?,?,?,?,?,?)"
+        Dim cmd As New OleDbCommand(query, con)
+        cmd.Parameters.AddWithValue("ORDER_ID", oid)
+        cmd.Parameters.AddWithValue("ITEM_ID", itemid)
+        cmd.Parameters.AddWithValue("ITEM_NAME", oitemnm)
+        cmd.Parameters.AddWithValue("MENU_TYPE", omenu)
+        cmd.Parameters.AddWithValue("ITEM_QUANTITY", oqua)
+        cmd.Parameters.AddWithValue("ITEM_PRICE", itempr)
+        cmd.Parameters.AddWithValue("ITEM_AMOUNT", tot)
+        Dim I As Integer
+        I = cmd.ExecuteNonQuery()
+        If (I > 0) Then
+            MessageBox.Show("ITEM ADDED")
+            dgshow1()
+        Else
+            MessageBox.Show("ITEM NOT ADDED")
+        End If
+
+********************************************************************
+  While dr.Read()
+            DateTimePicker1.Value = dr.GetValue(1)
+            DateTimePicker2.Value = dr.GetValue(2)
+            ComboBox6.Text = dr.GetValue(3)
+            ComboBox4.Text = dr.GetValue(4)
+            ComboBox1.Text = dr.GetValue(5)
+            ComboBox5.Text = dr.GetValue(6)
+
+        End While

@@ -1,0 +1,167 @@
+"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\\solan\\Desktop\\restaurant project\\resto.mdb"
+
+
+
+
+
+
+****************saving**********************
+
+ Dim id, i As Integer
+        Dim nm, addr, em, query As String
+        Dim cn As Long
+
+
+        id = CInt(TextBox1.Text)
+        nm = TextBox2.Text
+        addr = TextBox3.Text
+        cn = CLng(TextBox4.Text)
+        em = TextBox5.Text
+
+        con.Open()
+        query = "Insert into CUSTOMER([CUSTOMER_ID],CUSTOMER_NAME,CUSTOMER_ADDRESS,CUSTOMER_CONTACT,CUSTOMER_EMAIL) values(?,?,?,?,?)"
+
+        Dim cmd As New OleDbCommand(query, con)
+        cmd.Parameters.AddWithValue("CUSTOMER_ID", id)
+        cmd.Parameters.AddWithValue("CUSTOMER_NAME", nm)
+        cmd.Parameters.AddWithValue("CUSTOMER_ADDRESS", addr)
+        cmd.Parameters.AddWithValue("CUSTOMER_CONTACT", cn)
+        cmd.Parameters.AddWithValue("CUSTOMER_EMAIL", em)
+
+        i = cmd.ExecuteNonQuery()
+        If (i > 0) Then
+            MessageBox.Show("Record saved successfully")
+
+
+*****************************************************************************************
+
+  Dim query1 As String
+        query1 = "Select * from CUSTOMER where CUSTOMER_ID='" & id & "' "
+        Dim da As New OleDbDataAdapter
+        da = New OleDbDataAdapter(query1, con)
+
+        Dim dt As New DataTable
+        da.Fill(dt)
+
+*********************************************************************************
+
+    Dim style = MsgBoxStyle.YesNo
+        If response = MsgBoxResult.Yes Then
+
+            Dim srow1 As DataGridViewRow
+            srow1 = DataGridView1.Rows(index)
+***************************************************************************************
+DataGridView1.Sort(DataGridView1.Columns(1), System.ComponentModel.ListSortDirection.Ascending)
+
+*****************************************************************************************
+COMBOBOX POPULATE
+
+
+  Dim con As New OleDbConnection
+        con.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\\solan\\Desktop\\restaurant project\\resto.mdb"
+        con.Open()
+        Dim query1, itemnm As String
+        Dim dr As OleDbDataReader
+        query1 = "Select ITEM_NAME from ITEMS where MENU_TYPE='" & ComboBox2.Text & "' "
+        Dim cmd As New OleDbCommand(query1, con)
+        dr = cmd.ExecuteReader
+        While dr.Read
+
+            ComboBox3.Items.Add(itemnm)
+        End While
+
+**************************************************************************************
+
+Dim value As Object = Me.SalesDataGridView.Item(1, Me.SalesDataGridView.CurrentRow.Index).Value
+
+If ((value Is Nothing) OrElse ((TypeOf value Is DBNull) OrElse ((TypeOf value Is System.Data.SqlTypes.INullable) AndAlso DirectCast(value, System.Data.SqlTypes.INullable).IsNull))) Then
+    Me.ordersDataSet.sales.DefaultView.RowFilter = "[id] IS NULL"
+Else
+    Dim id As Integer = System.Convert.ToInt32(value)
+    Me.ordersDataSet.sales.DefaultView.RowFilter = String.Format("[id]={0}", id)
+End If
+
+
+*********************************************************************************
+
+ 'Resize DataGridView to full height.
+        Dim height As Integer = DataGridView1.Height
+        DataGridView1.Height = DataGridView1.RowCount * DataGridView1.RowTemplate.Height
+
+        'Create a Bitmap and draw the DataGridView on it.
+        Bitmap = New Bitmap(Me.DataGridView1.Width, Me.DataGridView1.Height)
+        DataGridView1.DrawToBitmap(Bitmap, New Rectangle(0, 0, Me.DataGridView1.Width, Me.DataGridView1.Height))
+
+        'Resize DataGridView back to original height.
+        DataGridView1.Height = height
+
+        'Show the Print Preview Dialog.
+        PrintPreviewDialog1.Document = PrintDocument1
+        PrintPreviewDialog1.PrintPreviewControl.Zoom = 1
+        PrintPreviewDialog1.ShowDialog()
+
+
+ Private Sub PrintDocument1_PrintPage(ByVal sender As System.Object, ByVal e As System.Drawing.Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
+        Dim bm As New Bitmap(Me.DataGridView1.Width, Me.DataGridView1.Height)
+        DataGridView1.DrawToBitmap(bm, New Rectangle(0, 0, Me.DataGridView1.Width, Me.DataGridView1.Height))
+        e.Graphics.DrawImage(bm, 0, 0)
+
+    End Sub
+
+
+*****************************************************************
+        Dim tbquery As String = "select CUSTOMER_ID,EMPLOYEE_ID,TABLE_ORDER_PRICE from TABLE_ORDER where ORDER_ID=" & o_id & ""
+
+
+Dim tbad As New OleDbDataAdapter(tbquery, con)
+        tbad.Fill(billtb)
+
+*******************************************************************
+ Dim billcom As New OleDbCommand
+        Dim billadap As New OleDbDataAdapter
+        Dim billtb As New DataTable
+        billtb.Clear()
+
+        billcom = New OleDbCommand(billquery, con)
+
+        With billadap
+            .SelectCommand = billcom
+            .Fill(billtb)
+        End With
+       
+        Dim crystal As New CrystalReport1
+
+
+        crystal.SetDataSource(billtb)
+
+        Form18.CrystalReportViewer1.ReportSource = crystal
+
+        Form18.CrystalReportViewer1.Refresh()
+        
+
+        Form18.Show()
+        con.Close()
+*************************************************  
+Dim billquery As String
+        billquery = "Select * from ORDER_TAKE where ORDER_ID=" & o_id & ""
+        Dim com As New OleDbCommand
+        Dim da As New OleDbDataAdapter
+        Dim tb As New DataTable
+
+        With com
+            .CommandText = billquery
+            .Connection = con
+        End With
+
+        With da
+            .SelectCommand = com
+            .Fill(tb)
+        End With
+
+        Dim cry As New CrystalReport1
+
+        cry.SetDataSource(tb)
+        Form18.CrystalReportViewer1.ReportSource = cry
+
+
+        Form18.CrystalReportViewer1.Refresh()
